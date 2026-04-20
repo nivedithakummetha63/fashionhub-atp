@@ -58,6 +58,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fashionhub.wsgi.application'
 
 # Database — uses DATABASE_URL env var in production, SQLite locally for dev
+# Database — uses DATABASE_URL env var in production, SQLite as fallback
 DATABASE_URL = os.environ.get('DATABASE_URL', '')
 if DATABASE_URL:
     DATABASES = {
