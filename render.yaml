@@ -2,7 +2,7 @@ services:
   - type: web
     name: fashionhub-atp
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py seed_categories"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate && python manage.py seed_categories && python create_admin.py"
     startCommand: "gunicorn fashionhub.wsgi:application"
     envVars:
       - key: SECRET_KEY
