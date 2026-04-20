@@ -1,0 +1,72 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}{{ form_title }} — Fashion Hub ATP{% endblock %}
+
+{% block content %}
+<section class="page-hero text-center">
+  <div class="container">
+    <h1 class="page-hero-title">{{ form_title }}</h1>
+    <p class="page-hero-sub">Fashion Hub ATP — Admin Panel</p>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+
+        <div class="pform-card">
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Product Name <span class="text-danger">*</span></label>
+              {{ form.name }}
+              {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+              {{ form.category }}
+              {% if form.category.errors %}<div class="text-danger small mt-1">{{ form.category.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Price (₹) <span class="text-danger">*</span></label>
+              {{ form.price }}
+              {% if form.price.errors %}<div class="text-danger small mt-1">{{ form.price.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Description</label>
+              {{ form.description }}
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Product Image {% if not product %}<span class="text-danger">*</span>{% endif %}</label>
+              {% if product and product.image %}
+              <div class="current-img-wrap mb-2">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="current-img" />
+                <p class="small text-muted mt-1">Current image — upload a new one to replace it</p>
+              </div>
+              {% endif %}
+              {{ form.image }}
+              {% if form.image.errors %}<div class="text-danger small mt-1">{{ form.image.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="d-flex gap-3">
+              <button type="submit" class="btn btn-pink-solid flex-grow-1">
+                <i class="bi bi-check-lg me-2"></i>{{ btn_label }}
+              </button>
+              <a href="{% url 'all_products' %}" class="btn btn-pink-outline">Cancel</a>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

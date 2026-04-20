@@ -1,0 +1,55 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Admin Login — Fashion Hub ATP{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="min-height:80vh; display:flex; align-items:center;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+
+        <div class="login-card">
+          <div class="text-center mb-4">
+            <div class="login-icon"><i class="bi bi-shield-lock-fill"></i></div>
+            <h3 class="login-title">Admin Login</h3>
+            <p class="login-sub">Fashion Hub ATP</p>
+          </div>
+
+          {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-danger py-2 small"><i class="bi bi-exclamation-circle me-2"></i>{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label fw-600">Username</label>
+              <div class="input-group">
+                <span class="input-group-text login-ig"><i class="bi bi-person-fill"></i></span>
+                <input type="text" name="username" class="form-control login-input" placeholder="Enter username" required autofocus />
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-600">Password</label>
+              <div class="input-group">
+                <span class="input-group-text login-ig"><i class="bi bi-lock-fill"></i></span>
+                <input type="password" name="password" class="form-control login-input" placeholder="Enter password" required />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-pink-solid w-100">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <a href="{% url 'home' %}" class="back-link"><i class="bi bi-arrow-left me-1"></i>Back to Store</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us — Fashion Hub ATP{% endblock %}
+
+{% block content %}
+
+<section class="page-hero text-center">
+  <div class="container">
+    <h1 class="page-hero-title">Contact Us</h1>
+    <p class="page-hero-sub">We'd love to hear from you</p>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="contact-card text-center">
+          <div class="contact-icon-wrap mb-4">
+            <i class="bi bi-shop-window contact-big-icon"></i>
+          </div>
+          <h3 class="contact-store-name">SRI LAKSHMI CHENNKASHEVA FANCY STORE</h3>
+          <hr class="contact-divider" />
+          <div class="contact-detail">
+            <i class="bi bi-geo-alt-fill me-2 text-pink"></i>
+            <span>KLD Bypass, Pampeta, Behind Hanuman Temple, Anantapur</span>
+          </div>
+          <div class="contact-detail mt-3">
+            <i class="bi bi-telephone-fill me-2 text-pink"></i>
+            <a href="tel:7013821498" class="contact-phone">7013821498</a>
+          </div>
+          <div class="mt-4">
+            <a href="tel:7013821498" class="btn btn-pink-solid me-2">
+              <i class="bi bi-telephone me-1"></i> Call Now
+            </a>
+            <a href="{% url 'all_products' %}" class="btn btn-pink-outline">
+              <i class="bi bi-bag me-1"></i> Browse Products
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

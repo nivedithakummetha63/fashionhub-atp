@@ -1,0 +1,105 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}All Products — Fashion Hub ATP{% endblock %}
+
+{% block content %}
+
+<section class="page-hero text-center">
+  <div class="container">
+    <h1 class="page-hero-title">All Products</h1>
+    <p class="page-hero-sub">Explore our complete collection</p>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+
+    <!-- Search + Filter -->
+    <form method="get" class="mb-4">
+      <div class="row g-2 align-items-center">
+        <div class="col-md-6">
+          <div class="input-group search-group">
+            <input type="text" name="q" value="{{ query }}" class="form-control search-input" placeholder="Search products..." />
+            <button class="btn btn-search-submit" type="submit"><i class="bi bi-search"></i></button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select name="category" class="form-select filter-select" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if cat_filter == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <a href="{% url 'all_products' %}" class="btn btn-outline-secondary w-100">Clear</a>
+        </div>
+      </div>
+    </form>
+
+    <!-- Category pills -->
+    <div class="cat-pills mb-4">
+      <a href="{% url 'all_products' %}" class="cat-pill {% if not cat_filter %}active{% endif %}">All</a>
+      {% for cat in categories %}
+      <a href="{% url 'category' cat.id %}" class="cat-pill">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for product in products %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img" loading="lazy" />
+            {% else %}
+            <div class="product-img-placeholder"><i class="bi bi-image"></i></div>
+            {% endif %}
+            <span class="product-badge">{{ product.category.name }}</span>
+          </div>
+          <div class="product-body">
+            <h6 class="product-name">{{ product.name }}</h6>
+            {% if product.description %}
+            <p class="product-desc">{{ product.description|truncatechars:60 }}</p>
+            {% endif %}
+            <p class="product-price">₹{{ product.price }}</p>
+            {% if user.is_authenticated and user.is_staff %}
+            <div class="admin-card-actions">
+              <a href="{% url 'product_edit' product.id %}" class="btn btn-card-edit"><i class="bi bi-pencil-fill me-1"></i>Edit</a>
+              <a href="{% url 'product_delete' product.id %}" class="btn btn-card-delete"><i class="bi bi-trash-fill me-1"></i>Delete</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-bag-x display-4 text-muted"></i>
+        <p class="text-muted mt-3">No products found.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if products.has_other_pages %}
+    <nav class="mt-5 d-flex justify-content-center">
+      <ul class="pagination pagination-pink">
+        {% if products.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if cat_filter %}&category={{ cat_filter }}{% endif %}">&laquo;</a></li>
+        {% endif %}
+        {% for num in products.paginator.page_range %}
+        <li class="page-item {% if products.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if cat_filter %}&category={{ cat_filter }}{% endif %}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if cat_filter %}&category={{ cat_filter }}{% endif %}">&raquo;</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}
